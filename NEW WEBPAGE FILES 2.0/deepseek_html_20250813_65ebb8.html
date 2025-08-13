@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConvertEasy | Unit & Currency Converter</title>
+    <meta name="description" content="Free online unit and currency converter with real-time exchange rates and historical data. Convert between currencies, lengths, weights, temperatures and more.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://converteasy.netlify.app/">
+    <meta property="og:title" content="ConvertEasy | Unit & Currency Converter">
+    <meta property="og:description" content="Free online unit and currency converter with real-time exchange rates and historical data.">
+    <meta property="og:image" content="https://converteasy.netlify.app/assets/social-preview.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://converteasy.netlify.app/">
+    <meta property="twitter:title" content="ConvertEasy | Unit & Currency Converter">
+    <meta property="twitter:description" content="Free online unit and currency converter with real-time exchange rates and historical data.">
+    <meta property="twitter:image" content="https://converteasy.netlify.app/assets/social-preview.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="converter.js"></script>
+    <script src="currency-api.js"></script>
+    <script src="script.js" defer></script>
+    <!-- AdSense placeholder -->
+    <script src="assets/adsense-placeholder.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <img src="assets/logo.png" alt="ConvertEasy Logo" class="logo">
+                <div>
+                    <h1>ConvertEasy</h1>
+                    <p class="tagline">Your one-stop conversion solution</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="light-icon">☀️</span>
+                    <span class="dark-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-tabs">
+                <li class="active" data-tab="currency">Currency</li>
+                <li data-tab="length">Length</li>
+                <li data-tab="weight">Weight</li>
+                <li data-tab="temperature">Temperature</li>
+                <li data-tab="volume">Volume</li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- AdSense Top Banner -->
+        <div class="ad-container ad-top">
+            <div class="ad-placeholder">Advertisement</div>
+        </div>
+
+        <!-- Currency Converter -->
+        <section id="currency-converter" class="converter-section active">
+            <div class="converter-container">
+                <div class="input-group">
+                    <input type="number" id="currency-amount" value="1" min="0" step="0.01">
+                    <select id="currency-from"></select>
+                </div>
+                <button id="swap-currencies" aria-label="Swap currencies">⇄</button>
+                <div class="input-group">
+                    <input type="number" id="currency-result" readonly>
+                    <select id="currency-to"></select>
+                </div>
+            </div>
+            <div class="converter-actions">
+                <button id="convert-currency">Convert</button>
+                <div class="rate-info">
+                    <span id="exchange-rate">1 USD = 0.85 EUR</span>
+                    <span id="last-updated">Updated: Just now</span>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="currency-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Length Converter -->
+        <section id="length-converter" class="converter-section">
+            <div class="converter-container">
+                <div class="input-group">
+                    <input type="number" id="length-amount" value="1" min="0" step="0.01">
+                    <select id="length-from">
+                        <option value="mm">Millimeter (mm)</option>
+                        <option value="cm">Centimeter (cm)</option>
+                        <option value="m">Meter (m)</option>
+                        <option value="km">Kilometer (km)</option>
+                        <option value="in">Inch (in)</option>
+                        <option value="ft">Foot (ft)</option>
+                        <option value="yd">Yard (yd)</option>
+                        <option value="mi">Mile (mi)</option>
+                    </select>
+                </div>
+                <span class="equals">=</span>
+                <div class="input-group">
+                    <input type="number" id="length-result" readonly>
+                    <select id="length-to">
+                        <option value="cm">Centimeter (cm)</option>
+                        <option value="m">Meter (m)</option>
+                        <option value="km">Kilometer (km)</option>
+                        <option value="in">Inch (in)</option>
+                        <option value="ft">Foot (ft)</option>
+                        <option value="yd">Yard (yd)</option>
+                        <option value="mi">Mile (mi)</option>
+                        <option value="mm">Millimeter (mm)</option>
+                    </select>
+                </div>
+            </div>
+            <button id="convert-length">Convert</button>
+        </section>
+
+        <!-- Weight Converter -->
+        <section id="weight-converter" class="converter-section">
+            <div class="converter-container">
+                <div class="input-group">
+                    <input type="number" id="weight-amount" value="1" min="0" step="0.01">
+                    <select id="weight-from">
+                        <option value="mg">Milligram (mg)</option>
+                        <option value="g">Gram (g)</option>
+                        <option value="kg">Kilogram (kg)</option>
+                        <option value="t">Metric Ton (t)</option>
+                        <option value="oz">Ounce (oz)</option>
+                        <option value="lb">Pound (lb)</option>
+                        <option value="st">Stone (st)</option>
+                    </select>
+                </div>
+                <span class="equals">=</span>
+                <div class="input-group">
+                    <input type="number" id="weight-result" readonly>
+                    <select id="weight-to">
+                        <option value="g">Gram (g)</option>
+                        <option value="kg">Kilogram (kg)</option>
+                        <option value="t">Metric Ton (t)</option>
+                        <option value="oz">Ounce (oz)</option>
+                        <option value="lb">Pound (lb)</option>
+                        <option value="st">Stone (st)</option>
+                        <option value="mg">Milligram (mg)</option>
+                    </select>
+                </div>
+            </div>
+            <button id="convert-weight">Convert</button>
+        </section>
+
+        <!-- Temperature Converter -->
+        <section id="temperature-converter" class="converter-section">
+            <div class="converter-container">
+                <div class="input-group">
+                    <input type="number" id="temp-amount" value="0" step="0.1">
+                    <select id="temp-from">
+                        <option value="c">Celsius (°C)</option>
+                        <option value="f">Fahrenheit (°F)</option>
+                        <option value="k">Kelvin (K)</option>
+                    </select>
+                </div>
+                <span class="equals">=</span>
+                <div class="input-group">
+                    <input type="number" id="temp-result" readonly>
+                    <select id="temp-to">
+                        <option value="f">Fahrenheit (°F)</option>
+                        <option value="c">Celsius (°C)</option>
+                        <option value="k">Kelvin (K)</option>
+                    </select>
+                </div>
+            </div>
+            <button id="convert-temp">Convert</button>
+        </section>
+
+        <!-- Volume Converter -->
+        <section id="volume-converter" class="converter-section">
+            <div class="converter-container">
+                <div class="input-group">
+                    <input type="number" id="volume-amount" value="1" min="0" step="0.01">
+                    <select id="volume-from">
+                        <option value="ml">Milliliter (ml)</option>
+                        <option value="l">Liter (l)</option>
+                        <option value="m3">Cubic Meter (m³)</option>
+                        <option value="tsp">Teaspoon (tsp)</option>
+                        <option value="tbsp">Tablespoon (tbsp)</option>
+                        <option value="floz">Fluid Ounce (fl oz)</option>
+                        <option value="cup">Cup (cup)</option>
+                        <option value="pt">Pint (pt)</option>
+                        <option value="qt">Quart (qt)</option>
+                        <option value="gal">Gallon (gal)</option>
+                    </select>
+                </div>
+                <span class="equals">=</span>
+                <div class="input-group">
+                    <input type="number" id="volume-result" readonly>
+                    <select id="volume-to">
+                        <option value="l">Liter (l)</option>
+                        <option value="ml">Milliliter (ml)</option>
+                        <option value="m3">Cubic Meter (m³)</option>
+                        <option value="tsp">Teaspoon (tsp)</option>
+                        <option value="tbsp">Tablespoon (tbsp)</option>
+                        <option value="floz">Fluid Ounce (fl oz)</option>
+                        <option value="cup">Cup (cup)</option>
+                        <option value="pt">Pint (pt)</option>
+                        <option value="qt">Quart (qt)</option>
+                        <option value="gal">Gallon (gal)</option>
+                    </select>
+                </div>
+            </div>
+            <button id="convert-volume">Convert</button>
+        </section>
+
+        <!-- AdSense Bottom Banner -->
+        <div class="ad-container ad-bottom">
+            <div class="ad-placeholder">Advertisement</div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> ConvertEasy. All rights reserved.</p>
+            <p>Currency rates updated daily from <a href="https://exchangerate-api.com" target="_blank" rel="noopener">ExchangeRate-API</a></p>
+        </div>
+    </footer>
+</body>
+</html>

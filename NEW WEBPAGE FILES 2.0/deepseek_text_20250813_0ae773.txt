@@ -1,0 +1,11 @@
+converter-website/
+├── index.html                # Main website file
+├── style.css                 # Stylesheet
+├── script.js                 # Main JavaScript functionality
+├── converter.js              # Conversion logic
+├── currency-api.js           # Currency API handling
+├── README.md                 # Setup instructions
+├── assets/
+│   ├── logo.png              # Website logo
+│   ├── favicon.ico           # Favicon
+│   └── adsense-placeholder.js # AdSense code template
